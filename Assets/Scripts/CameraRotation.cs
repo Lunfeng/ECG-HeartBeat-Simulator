@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CameraRotation : MonoBehaviour
 {
+
+    public GameObject Heart;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,6 +15,6 @@ public class CameraRotation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Camera.main.gameObject.transform.LookAt(Heart.transform);
     }
 }
