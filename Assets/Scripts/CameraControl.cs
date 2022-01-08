@@ -11,13 +11,15 @@ public class CameraControl : MonoBehaviour
     public float camDistence = 5.0f;
     public float rotationSpeed = 5.0f;
     public float maxAngle = 60f;
-    public float rateOfDecay = 0.01f;
+    public float changeRate = 0.01f;
 
     [SerializeField]
     private float mouseVelocity = 0;
 
     private float x;
     private float y;
+    [SerializeField]
+    Vector3 pos;
 
     // Start is called before the first frame update
     void Start()
@@ -39,10 +41,15 @@ public class CameraControl : MonoBehaviour
         else
         {
             if(Input.GetKeyUp(KeyCode.Mouse0))
-                StartCoroutine(InertialRotation(GetRotationVelocity()));
+                StartCoroutine(InertialRotation(GetRotationVelocity(), Vector3.zero));
             Camera.transform.LookAt(Heart.transform);
             Camera.transform.position = Heart.transform.position - Camera.transform.forward * camDistence;
         }
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            LookAt(Heart.transform.eulerAngles);
+        }
+        pos = Camera.transform.eulerAngles;
     }
 
     public void Spin(float x, float y)
@@ -60,15 +67,38 @@ public class CameraControl : MonoBehaviour
         return mousePosDelta;
     }
 
-    IEnumerator InertialRotation(Vector3 mousePosDelta)
+    public void LookAt(Vector3 targetPos)
     {
-        Vector3 pos = mousePosDelta;
-        Debug.Log(pos);
-        while(pos.magnitude > 0)
+        targetPos.y += 90;
+        StartCoroutine(RotateTo(Camera.transform.eulerAngles, targetPos));
+    }
+
+    IEnumerator RotateTo(Vector3 currentPos, Vector3 targetPos)
+    {
+        while ((currentPos - targetPos).magnitude > 0.1f)
         {
-            pos.x = Mathf.Lerp(pos.x, 0, rateOfDecay);
-            pos.y = Mathf.Lerp(pos.y, 0, rateOfDecay);
-            Spin(pos.x, pos.y);
+            if (currentPos.x > 180)
+            {
+                currentPos.x = 360 - Mathf.Lerp(360f - currentPos.x, targetPos.x, changeRate);
+            }
+            else
+            {
+                currentPos.x = Mathf.Lerp(currentPos.x, targetPos.x, changeRate);
+            }
+            currentPos.y = Mathf.Lerp(currentPos.y, targetPos.y, changeRate);
+            Camera.transform.eulerAngles = currentPos;
+            Camera.transform.position = Heart.transform.position - Camera.transform.forward * camDistence;
+            yield return 0;
+        }
+    }
+
+    IEnumerator InertialRotation(Vector3 currentPos, Vector3 targetPos)
+    {
+        while(currentPos.magnitude > 0)
+        {
+            currentPos.x = Mathf.Lerp(currentPos.x, targetPos.x, changeRate);
+            currentPos.y = Mathf.Lerp(currentPos.y, targetPos.y, changeRate);
+            Spin(currentPos.x, currentPos.y);
             yield return 0;
         }
     }
