@@ -5,30 +5,35 @@ using UnityEngine;
 public class CameraManager
 {
     public CameraControl cameraControl = Camera.main.GetComponent<CameraControl>();
-    public void EnableCameraRotation()
+    public void EnableUserInteraction()
     {
-        cameraControl.canRotation = true;
+        cameraControl.interactable = true;
     }
 
-    public void DisableCameraRotation()
+    public void DisableUserInteraction()
     {
-        cameraControl.canRotation = false;
+        cameraControl.interactable = false;
     }
 
     public void SetCameraDistence(float dis)
     {
-        Mathf.Clamp(dis, 1, 10);
-        cameraControl.camDistence = dis;
+        cameraControl.UpdateDistence(dis);
     }
 
     public void SetCameraSpeed(float speed)
     {
-        Mathf.Clamp(speed, 1, 10);
         cameraControl.rotationSpeed = speed;
     }
 
-    public static void ResetCamera()
+    public void ResetCamera()
     {
+        DisableUserInteraction();
+        cameraControl.LookAtFront(GameObject.Find("Heart").transform.eulerAngles, ResetFinished);
+    }
 
+    public void ResetFinished()
+    {
+        Debug.Log("Get it!");
+        EnableUserInteraction();
     }
 }

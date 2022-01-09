@@ -173,12 +173,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Heart: {fileID: 0}
   Camera: {fileID: 0}
-  canRotation: 1
+  interactable: 1
   camDistence: 5
   rotationSpeed: 5
   maxAngle: 60
-  rateOfDecay: 0.01
-  mouseVelocity: 0
+  changeRate: 0.01
+  autoRotation: 1
+  eulerAngle: {x: 0, y: 0, z: 0}
 --- !u!20 &199135705
 Camera:
   m_ObjectHideFlags: 0
@@ -229,13 +230,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 199135701}
-  m_LocalRotation: {x: 0.039741296, y: -0.5964641, z: 0.029589297, w: 0.80110914}
-  m_LocalPosition: {x: 4.7665687, y: 0.49486068, z: -1.426513}
+  m_LocalRotation: {x: 0, y: -0.38268343, z: 0, w: 0.92387956}
+  m_LocalPosition: {x: 3.6512306, y: -0.00013264018, z: -2.9792578}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 21.014002, y: -48.368004, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -45, z: 0}
 --- !u!111 &622167053
 Animation:
   m_ObjectHideFlags: 0
@@ -250,7 +251,7 @@ Animation:
   - {fileID: 7400000, guid: efb10885f6cdc4c0ead2da32d5176fca, type: 3}
   - {fileID: 7400002, guid: efb10885f6cdc4c0ead2da32d5176fca, type: 3}
   m_WrapMode: 0
-  m_PlayAutomatically: 1
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 1
 --- !u!137 &627953865
@@ -1076,14 +1077,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 633167235}
-  m_LocalRotation: {x: -0, y: -0.92705923, z: -0, w: 0.37491488}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: -0.9257354, z: 0, w: 0.37817198}
+  m_LocalPosition: {x: 0.08192134, y: 0, z: 0.52217454}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 632996335}
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: -135.962, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -135.559, z: 0}
 --- !u!4 &632996261
 Transform:
   m_ObjectHideFlags: 0
@@ -1616,7 +1617,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 633167311}
   m_LocalRotation: {x: 0.0021269466, y: 0.05383064, z: 0.026179979, w: 0.9982046}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 632995957}
@@ -1624,7 +1625,7 @@ Transform:
   - {fileID: 632995943}
   m_Father: {fileID: 632996259}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 3.008, y: -169.994, z: 0.119}
 --- !u!4 &632996337
 Transform:
   m_ObjectHideFlags: 0
