@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,10 +35,10 @@ public class CameraControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (interactable && Input.GetKey(KeyCode.Mouse0))
+        if (interactable && Input.GetKey(KeyCode.Mouse0))   //当用户可操作并且左键按下时
         {
             StopAllCoroutines();
-            x = Input.GetAxis("Mouse X");
+            x = Input.GetAxis("Mouse X");                   //对鼠标坐标采样
             y = Input.GetAxis("Mouse Y");
             Spin(x, y);
         }
@@ -53,9 +54,13 @@ public class CameraControl : MonoBehaviour
             AutoRotation(true);
             //LookAtFront(Heart.transform.eulerAngles, temp);
         }
-        if (Input.GetKeyDown(KeyCode.Mouse3))
+        if (Input.GetKeyDown(KeyCode.Mouse2))
         {
             LookAtFront(Heart.transform.eulerAngles, cb);
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
         }
         eulerAngle = Camera.transform.eulerAngles;
     }
@@ -150,7 +155,13 @@ public class CameraControl : MonoBehaviour
             Camera.transform.position = Heart.transform.position - Camera.transform.forward * camDistence;
             yield return 0;
         }
-        callback();
+        try
+        {
+            callback();
+        }catch(Exception e)
+        {
+            Debug.LogError(e.Message);
+        }
     }
 
     IEnumerator ChangeDistence(float distence)

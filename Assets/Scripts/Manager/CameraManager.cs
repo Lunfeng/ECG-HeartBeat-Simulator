@@ -5,6 +5,7 @@ using UnityEngine;
 public class CameraManager
 {
     public CameraControl cameraControl = Camera.main.GetComponent<CameraControl>();
+    private GameManager manager = GameManager.GetGameManager();
     public void EnableUserInteraction()
     {
         cameraControl.interactable = true;
