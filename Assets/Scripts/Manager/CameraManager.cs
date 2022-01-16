@@ -4,16 +4,26 @@ using UnityEngine;
 
 public class CameraManager
 {
-    public CameraControl cameraControl = Camera.main.GetComponent<CameraControl>();
-    private GameManager manager = GameManager.GetGameManager();
-    public void EnableUserInteraction()
+    public CameraControl cameraControl;
+    private GameObject Heart;
+    private GameObject Target2;
+
+    public CameraManager()
     {
-        cameraControl.interactable = true;
+        cameraControl = Camera.main.GetComponent<CameraControl>();
+        Heart = GameObject.Find("Heart");
+        Target2 = GameObject.Find("Target2");
     }
 
-    public void DisableUserInteraction()
+    public void InitCamera()
     {
-        cameraControl.interactable = false;
+        ResetCamera(true);
+        SwitchToShowMode(false);
+    }
+
+    public void UndateUserInteraction(bool interactable)
+    {
+        cameraControl.interactable = interactable;
     }
 
     public void SetCameraDistence(float dis)
@@ -26,15 +36,20 @@ public class CameraManager
         cameraControl.rotationSpeed = speed;
     }
 
-    public void ResetCamera()
+    public void ResetCamera(bool immediately)
     {
-        DisableUserInteraction();
-        cameraControl.LookAtFront(GameObject.Find("Heart").transform.eulerAngles, ResetFinished);
+        UndateUserInteraction(false);
+        cameraControl.LookAtFront(Heart.transform.eulerAngles, ResetFinished, immediately);
     }
 
     public void ResetFinished()
     {
-        Debug.Log("Get it!");
-        EnableUserInteraction();
+        UndateUserInteraction(true);
+    }
+
+    public void SwitchToShowMode(bool Switch)
+    {
+        cameraControl.interactable = Switch;
+        cameraControl.SwitchTarget(Switch ? Heart : Target2);
     }
 }

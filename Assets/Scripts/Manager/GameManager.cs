@@ -1,18 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager
 {
     private static GameManager Singleton = null;
     private GameStage stage;
+    private CameraManager camera;
+    private UIManager ui;
+    private ECGManager ecg;
 
     public GameManager()
     {
         stage = GameStage.StartMenu;
+        camera = new CameraManager();
+        ui = new UIManager();
+        ecg = new ECGManager();
     }
 
-    public static GameManager GetGameManager()
+    public static GameManager GetInstance()
     {
         if (Singleton == null)
         {
@@ -21,16 +25,30 @@ public class GameManager
         return Singleton;
     }
 
+    public static void DestroyGameManager()
+    {
+        Singleton = null;
+    }
+
+    public void Init()
+    {
+        ui.InitUI();
+        camera.InitCamera();
+    }
+
     public void SetStage(GameStage stage)
     {
         this.stage = stage;
         switch (stage)
         {
             case GameStage.StartMenu:
+                StartMenu();
                 break;
             case GameStage.ShowPage:
+                ShowPage();
                 break;
             case GameStage.ECGPage:
+                ECGPage();
                 break;
         }
     }
@@ -42,22 +60,29 @@ public class GameManager
 
     public void SetGameSpeed(float speed)
     {
-
+        ecg.SetPlaySpeed(Mathf.Clamp(speed, 0f, 2f));
+        ui.SetSpeedText(speed);
     }
 
-    public void StartMenu()
+    private void StartMenu()
     {
-        
+        Debug.Log("StartMenu");
+        camera.ResetCamera(true);
+        camera.SwitchToShowMode(false);
+        ui.ResetPlaySpeed();
+        ui.ActiveStartMenu();
     }
 
-    public void ShowPage()
+    private void ShowPage()
     {
-
+        Debug.Log("ShowMenu");
+        ui.ActiveShowPage();
+        camera.SwitchToShowMode(true);
     }
 
-    public void ECGPage()
+    private void ECGPage()
     {
-
+        Debug.Log("ECGMenu");
     }
 }
 
