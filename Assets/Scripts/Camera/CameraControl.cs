@@ -53,7 +53,6 @@ public class CameraControl : MonoBehaviour
         //}
         if (Physics.Raycast(ray, out hit, int.MaxValue))
         {
-            Debug.Log(hit.transform.gameObject.name);
             if (interactable && Input.GetKeyDown(KeyCode.Mouse0) && hit.transform.name == "Heart")   //当用户可操作并且左键按下时
             {
                 canDrag = true;
@@ -74,11 +73,11 @@ public class CameraControl : MonoBehaviour
         Camera.transform.LookAt(Target.transform);
         Camera.transform.position = Target.transform.position - Camera.transform.forward * camDistence;
 
-        if (Input.GetKeyDown(KeyCode.Mouse1))
+        if (Input.GetKeyDown(KeyCode.Mouse1) && interactable)
         {
             AutoRotation(true);
         }
-        if (Input.GetKeyDown(KeyCode.Mouse2))
+        if (Input.GetKeyDown(KeyCode.Mouse2) && interactable)
         {
             LookAtFront(Target.transform.eulerAngles, cb, false);
         }
@@ -112,6 +111,7 @@ public class CameraControl : MonoBehaviour
             StopAllCoroutines();
             Camera.transform.eulerAngles = targetPos;
             Camera.transform.position = Target.transform.position - Camera.transform.forward * camDistence;
+            //Debug.Log(targetPos);
             return;
         }
         StartCoroutine(RotateTo(targetPos));
@@ -143,6 +143,18 @@ public class CameraControl : MonoBehaviour
     public void SwitchTarget(GameObject target)
     {
         Target = target;
+    }
+
+    public void EnableMonitor(bool enable)
+    {
+        if (enable)
+        {
+            Camera.GetComponent<Camera>().cullingMask = ~(1 << LayerMask.NameToLayer("PathSystem"));
+        }
+        else
+        {
+            Camera.GetComponent<Camera>().cullingMask = ~(1 << LayerMask.NameToLayer("Monitor") | 1 << LayerMask.NameToLayer("PathSystem"));
+        }
     }
 
     IEnumerator RotateTo(Vector3 targetPos)

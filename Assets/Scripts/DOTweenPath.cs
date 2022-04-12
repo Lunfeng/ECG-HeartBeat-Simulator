@@ -6,7 +6,7 @@ using UnityEngine;
 public class DOTweenPath : MonoBehaviour
 {
 	public Transform target;
-	public PathType pathType = PathType.CatmullRom;
+	public PathType pathType = PathType.Linear ;
 	public Vector3[] waypoints = new[] {
 		new Vector3(4, 2, 6),
 		new Vector3(8, 6, 14),
@@ -26,5 +26,6 @@ public class DOTweenPath : MonoBehaviour
 			.SetLookAt(0.001f);
 		// Then set the ease to Linear and use infinite loops
 		t.SetEase(Ease.Linear).SetLoops(-1);
+		t.GotoWaypoint(2, false);
 	}
 }

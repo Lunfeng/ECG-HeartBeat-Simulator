@@ -52,4 +52,9 @@ public class CameraManager
         cameraControl.interactable = Switch;
         cameraControl.SwitchTarget(Switch ? Heart : Target2);
     }
+
+    public void EnableMonitor(bool enable)
+    {
+        cameraControl.EnableMonitor(enable);
+    }
 }
