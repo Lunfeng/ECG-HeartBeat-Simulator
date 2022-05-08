@@ -63,6 +63,7 @@ public class ECGManager
 
     public void NextAnim()
     {
+        GameManager.GetInstance().ecg.Monitor.NextAnim();
         int num = heart.NextAnim();
         path.StartPath(num);
         GameManager.GetInstance().ui.ChangeIntroductionPage(num);
@@ -70,6 +71,7 @@ public class ECGManager
 
     public void PreviouAnim()
     {
+        GameManager.GetInstance().ecg.Monitor.PreviousAnim();
         int num = heart.PreviousAnim();
         path.StartPath(num);
         GameManager.GetInstance().ui.ChangeIntroductionPage(num);

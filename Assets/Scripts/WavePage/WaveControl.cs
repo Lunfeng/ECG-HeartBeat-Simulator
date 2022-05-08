@@ -12,6 +12,7 @@ public class WaveControl : MonoBehaviour
     public RectTransform ScaleObj;
     public float speed = 1;
     public float TrailWidth = 1;
+    public float DotTrailWidth = 5;
     public Material TrailMaterial;
     public Material DotMaterial;
     public float PathRenderTime = 20;
@@ -37,7 +38,6 @@ public class WaveControl : MonoBehaviour
     public void Start()
     {
         anim = heartAnim["play"];
-        SetSpeed();
         //SetAnimSpeed(2);
         ShowWaves();
     }
@@ -48,12 +48,10 @@ public class WaveControl : MonoBehaviour
         switch (page)
         {
             case 0:
-                speed = anim.length / (DotPathDuration / 5) / 1;
-                SetAnimSpeed(speed);
+                SetAnimSpeed(anim.length / (DotPathDuration / 5));
                 break;
             case 1:
-                speed = anim.length / (DotPathDuration / 4) / 1;
-                SetAnimSpeed(speed);
+                SetAnimSpeed(anim.length / (DotPathDuration / 4));
                 break;
         }
     }
@@ -112,7 +110,7 @@ public class WaveControl : MonoBehaviour
             tr2.emitting = true;
             tr2.time = 2;
             //tr2.startWidth = TrailWidth;
-            tr2.startWidth = 5;
+            tr2.startWidth = DotTrailWidth;
             tr2.endWidth = 0;
             tr2.material = DotMaterial;
             tr2.minVertexDistance = 0;

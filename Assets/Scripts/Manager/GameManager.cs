@@ -87,7 +87,7 @@ public class GameManager
         ecg.RestartAnim();
         ecg.RewindDefault();
         ecg.PlayDefaultPath();
-        ecg.Monitor.NextAnim();
+        ecg.Monitor.DisableAllAnim();
         camera.cameraControl.EnableWaveCamera(false);
         camera.cameraControl.EnableMonitorCamera(true);
     }
@@ -112,6 +112,7 @@ public class GameManager
         ecg.RewindDefault();
         ecg.PlayDefaultPath();
         ecg.SetPathSpeed(0.04f);
+        ecg.Monitor.DisableAllAnim();
         camera.cameraControl.EnableWaveCamera(false);
         camera.cameraControl.EnableMonitorCamera(true);
     }
@@ -120,6 +121,7 @@ public class GameManager
     {
         Debug.Log("WavePage");
         ui.ActiveWavePage();
+        ecg.wave1.SetSpeed();
         camera.cameraControl.EnableWaveCamera(true);
         camera.cameraControl.EnableMonitorCamera(false);
     }
@@ -128,6 +130,7 @@ public class GameManager
     {
         Debug.Log("WavePage");
         ui.ActiveWavePage2();
+        ecg.wave2.SetSpeed();
         camera.cameraControl.EnableWaveCamera(true);
         camera.cameraControl.EnableMonitorCamera(false);
     }

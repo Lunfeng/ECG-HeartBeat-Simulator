@@ -28,15 +28,34 @@ public class HeartPathData : MonoBehaviour
     public float DotPathDuration = 5;
     public float XFix = 1;
     public float YFix = 1;
-    private int index = 0;
+    private int index = -1;
 
     public int NextAnim()
     {
-        if(index < 5)
+        if(index < 4)
         {
-            Waves[index].TrailTween.Play<Tween>();
+            if(index > -1)
+                Waves[index].TrailTween.Rewind();
             index++;
+            foreach (Wave w in Waves)
+            {
+                w.DotTrail.Clear();
+            }
             Waves[index].TrailTween.Play<Tween>();
+            //for(int i = 0;i<Waves.Count;i++ )
+            //{
+            //    if(i == index)
+            //    {
+            //        Waves[index].TrailTween.Play<Tween>();
+            //        index++;
+            //        Waves[index].TrailTween.Play<Tween>();
+            //    }
+            //    else
+            //    {
+
+            //    }
+            //    w.DotTrail.Clear();
+            //}
         }
         return index;
     }
@@ -45,8 +64,12 @@ public class HeartPathData : MonoBehaviour
     {
         if (index > 0)
         {
-            Waves[index].TrailTween.Play<Tween>();
+            Waves[index].TrailTween.Rewind();
             index--;
+            foreach (Wave w in Waves)
+            {
+                w.DotTrail.Clear();
+            }
             Waves[index].TrailTween.Play<Tween>();
         }
         return index;
@@ -54,8 +77,10 @@ public class HeartPathData : MonoBehaviour
 
     public void DisableAllAnim()
     {
+        if (index == -1)
+            return;
         Waves[index].TrailTween.Rewind();
-        index = 0;
+        index = -1;
         foreach(Wave w in Waves)
         {
             w.DotTrail.Clear();

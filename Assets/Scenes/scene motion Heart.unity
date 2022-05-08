@@ -12542,8 +12542,9 @@ MonoBehaviour:
   - {fileID: 425139766}
   ScaleObj: {fileID: 322828865}
   speed: 1
-  TrailWidth: 10.37
-  TrailMaterial: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  TrailWidth: 8
+  DotTrailWidth: 15
+  TrailMaterial: {fileID: 2100000, guid: ad1c52f738b58c148901de27214e79ec, type: 2}
   DotMaterial: {fileID: 2100000, guid: 62c9e0635e174734899dcd25dcd50d68, type: 2}
   PathRenderTime: 20
   PathDuration: 4
@@ -16105,8 +16106,9 @@ MonoBehaviour:
   ScaleObj: {fileID: 1529117056}
   speed: 1
   TrailWidth: 1
-  TrailMaterial: {fileID: 10756, guid: 0000000000000000e000000000000000, type: 0}
-  DotMaterial: {fileID: 2100000, guid: 62c9e0635e174734899dcd25dcd50d68, type: 2}
+  DotTrailWidth: 5
+  TrailMaterial: {fileID: 2100000, guid: 83fd0c062e9591e44b9c30db405eda8c, type: 2}
+  DotMaterial: {fileID: 2100000, guid: e0fed342769e31248a3a7276d6d0f6b0, type: 2}
   PathRenderTime: 20
   PathDuration: 4
   DotPathDuration: 5
@@ -18600,7 +18602,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1517549199}
   - component: {fileID: 1517549201}
-  - component: {fileID: 1517549200}
   - component: {fileID: 1517549202}
   m_Layer: 6
   m_Name: MonitorApartPage
@@ -18629,39 +18630,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1517549200
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1517549198}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80c6db9d3ef5d8c46bb2236a091ad009, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  StartPoints:
-  - {fileID: 22599953}
-  - {fileID: 22599953}
-  - {fileID: 22599953}
-  - {fileID: 22599953}
-  - {fileID: 22599953}
-  - {fileID: 22599953}
-  ScaleObj: {fileID: 1740408176}
-  speed: 1
-  TrailWidth: 10.37
-  TrailMaterial: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  DotMaterial: {fileID: 2100000, guid: 62c9e0635e174734899dcd25dcd50d68, type: 2}
-  PathRenderTime: 20
-  PathDuration: 4
-  DotPathDuration: 5
-  XFix: 1.0714285
-  YFix: 1
-  page: 1
-  AnimStartTime: 0
-  filename: /ECG_Path_Parts.json
-  heartAnim: {fileID: 201520227}
 --- !u!222 &1517549201
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -18691,11 +18659,11 @@ MonoBehaviour:
   - {fileID: 22599953}
   ScaleObj: {fileID: 1740408176}
   speed: 1
-  TrailWidth: 10
-  TrailMaterial: {fileID: 2100000, guid: ad1c52f738b58c148901de27214e79ec, type: 2}
+  TrailWidth: 20
+  TrailMaterial: {fileID: 2100000, guid: f34d0eedf2da3ab41a2b9de3e1d2f2fc, type: 2}
   PathRenderTime: 20
-  PathDuration: 4
-  DotPathDuration: 5
+  PathDuration: 1
+  DotPathDuration: 1
   XFix: 1.071429
   YFix: 1
 --- !u!1 &1523403714
@@ -23245,8 +23213,9 @@ MonoBehaviour:
   ScaleObj: {fileID: 326938679}
   speed: 1
   TrailWidth: 1
-  TrailMaterial: {fileID: 10756, guid: 0000000000000000e000000000000000, type: 0}
-  DotMaterial: {fileID: 2100000, guid: 62c9e0635e174734899dcd25dcd50d68, type: 2}
+  DotTrailWidth: 5
+  TrailMaterial: {fileID: 2100000, guid: 83fd0c062e9591e44b9c30db405eda8c, type: 2}
+  DotMaterial: {fileID: 2100000, guid: e0fed342769e31248a3a7276d6d0f6b0, type: 2}
   PathRenderTime: 20
   PathDuration: 4
   DotPathDuration: 5
