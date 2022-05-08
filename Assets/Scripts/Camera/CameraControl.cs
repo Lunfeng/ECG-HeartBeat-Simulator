@@ -6,7 +6,9 @@ using UnityEngine;
 public class CameraControl : MonoBehaviour
 {
     public GameObject Target;
-    public GameObject Camera;
+    public GameObject m_Camera;
+    public GameObject MonitorCamera;
+    public GameObject WaveCamera;
 
     public bool interactable = true;
     public float camDistence = 5.0f;
@@ -29,7 +31,7 @@ public class CameraControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Camera = UnityEngine.Camera.main.gameObject;
+        m_Camera = UnityEngine.Camera.main.gameObject;
         Target = GameObject.Find("Target2");
     }
 
@@ -70,8 +72,8 @@ public class CameraControl : MonoBehaviour
             y = Input.GetAxis("Mouse Y");
             Spin(x, y);
         }
-        Camera.transform.LookAt(Target.transform);
-        Camera.transform.position = Target.transform.position - Camera.transform.forward * camDistence;
+        m_Camera.transform.LookAt(Target.transform);
+        m_Camera.transform.position = Target.transform.position - m_Camera.transform.forward * camDistence;
 
         if (Input.GetKeyDown(KeyCode.Mouse1) && interactable)
         {
@@ -85,20 +87,20 @@ public class CameraControl : MonoBehaviour
         {
             Application.Quit();
         }
-        eulerAngle = Camera.transform.eulerAngles;
+        eulerAngle = m_Camera.transform.eulerAngles;
     }
 
     public void cb()
     {
-
+        
     }
 
     public void Spin(float x, float y)
     {
-        Vector3 targetAngle = (Vector3.right * -y + Vector3.up * x) * rotationSpeed + Camera.transform.eulerAngles;
+        Vector3 targetAngle = (Vector3.right * -y + Vector3.up * x) * rotationSpeed + m_Camera.transform.eulerAngles;
         targetAngle.x = ClampAngle(targetAngle.x, -maxAngle, maxAngle);
-        Camera.transform.eulerAngles = targetAngle;
-        Camera.transform.position = Target.transform.position - Camera.transform.forward * camDistence;
+        m_Camera.transform.eulerAngles = targetAngle;
+        m_Camera.transform.position = Target.transform.position - m_Camera.transform.forward * camDistence;
     }
 
     public void LookAtFront(Vector3 targetPos, RoatationFinishCallBack callback, bool immediately)
@@ -109,8 +111,8 @@ public class CameraControl : MonoBehaviour
         if (immediately)
         {
             StopAllCoroutines();
-            Camera.transform.eulerAngles = targetPos;
-            Camera.transform.position = Target.transform.position - Camera.transform.forward * camDistence;
+            m_Camera.transform.eulerAngles = targetPos;
+            m_Camera.transform.position = Target.transform.position - m_Camera.transform.forward * camDistence;
             //Debug.Log(targetPos);
             return;
         }
@@ -128,7 +130,7 @@ public class CameraControl : MonoBehaviour
         if (isEnable)
         {
             autoRotation = true;
-            Vector3 targetPos = Camera.transform.eulerAngles;
+            Vector3 targetPos = m_Camera.transform.eulerAngles;
             targetPos.x = 0;
             //StartCoroutine(RotateTo(Camera.transform.eulerAngles, targetPos));
             StartCoroutine(RotateTo(targetPos));
@@ -145,21 +147,32 @@ public class CameraControl : MonoBehaviour
         Target = target;
     }
 
+    public void EnableWaveCamera(bool on)
+    {
+        WaveCamera.SetActive(on);
+        m_Camera.SetActive(!on);
+    }
+
+    public void EnableMonitorCamera(bool on)
+    {
+        MonitorCamera.SetActive(on);
+    }
+
     public void EnableMonitor(bool enable)
     {
         if (enable)
         {
-            Camera.GetComponent<Camera>().cullingMask = ~(1 << LayerMask.NameToLayer("PathSystem"));
+            m_Camera.GetComponent<Camera>().cullingMask = ~(1 << LayerMask.NameToLayer("PathSystem"));
         }
         else
         {
-            Camera.GetComponent<Camera>().cullingMask = ~(1 << LayerMask.NameToLayer("Monitor") | 1 << LayerMask.NameToLayer("PathSystem"));
+            m_Camera.GetComponent<Camera>().cullingMask = ~(1 << LayerMask.NameToLayer("Monitor") | 1 << LayerMask.NameToLayer("PathSystem"));
         }
     }
 
     IEnumerator RotateTo(Vector3 targetPos)
     {
-        Vector3 offsetPos = targetPos - Camera.transform.eulerAngles;
+        Vector3 offsetPos = targetPos - m_Camera.transform.eulerAngles;
         offsetPos.y = offsetPos.y > 180 ? offsetPos.y - 360 : offsetPos.y;
         offsetPos.x = offsetPos.x < -180 ? offsetPos.x + 360 : offsetPos.x;
         Vector3 pos = Vector3.zero;
@@ -169,8 +182,8 @@ public class CameraControl : MonoBehaviour
             pos.x = Mathf.Lerp(0, offsetPos.x, changeRate); 
             offsetPos.y -= pos.y;
             offsetPos.x -= pos.x;
-            Camera.transform.eulerAngles += pos;
-            Camera.transform.position = Target.transform.position - Camera.transform.forward * camDistence;
+            m_Camera.transform.eulerAngles += pos;
+            m_Camera.transform.position = Target.transform.position - m_Camera.transform.forward * camDistence;
             yield return 0;
         }
         try

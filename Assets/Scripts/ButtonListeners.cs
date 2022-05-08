@@ -9,15 +9,21 @@ public class ButtonListeners : MonoBehaviour
     public GameObject StartMenu;
     public GameObject ShowPage;
     public GameObject ECGPage;
+    public GameObject WavePage;
+    public GameObject WavePage2;
     public GameObject Menu;
     public GameObject StartPage;
     public Button ShowPageButton;
     public Button ECGButton;
+    public Button WaveButton;
+    public Button Wave2Button;
     public Button QuitButton;
     public Button ShowPageBackButton;
     public Button PauseButton;
     public Button ContinueButton;
     public Button ECGBackButton;
+    public Button WaveBackButton;
+    public Button Wave2BackButton;
     public Button NextAnimButton;
     public Button PreviousAnimButton;
     public Button PlayDefaultButton;
@@ -33,10 +39,14 @@ public class ButtonListeners : MonoBehaviour
 
         ShowPage = gameObject.transform.GetChild(1).gameObject;
         ECGPage = gameObject.transform.GetChild(2).gameObject;
+        WavePage = GameObject.Find("WavePage");
+        WavePage2 = GameObject.Find("WavePage2");
 
         //MenuButton
         ShowPageButton = Menu.transform.Find("ShowPageButton").GetComponent<Button>();
         ECGButton = Menu.transform.Find("ECGButton").GetComponent<Button>();
+        WaveButton = Menu.transform.Find("WaveButton").GetComponent<Button>();
+        Wave2Button = Menu.transform.Find("Wave2Button").GetComponent<Button>();
         QuitButton = Menu.transform.Find("QuitButton").GetComponent<Button>();
         
         //ShowPageButton
@@ -51,9 +61,13 @@ public class ButtonListeners : MonoBehaviour
         PreviousAnimButton = ECGPage.transform.Find("PreviousAnim").GetComponent<Button>();
         PlayDefaultButton = ECGPage.transform.Find("PlayDefault").GetComponent<Button>();
         ECGBackButton = ECGPage.transform.Find("Back").GetComponent<Button>();
-
+        WaveBackButton = WavePage.transform.Find("Back").GetComponent<Button>();
+        Wave2BackButton = WavePage2.transform.Find("Back").GetComponent<Button>();
+        
         ShowPageButton.onClick.AddListener(OnShowButtonClick);
         ECGButton.onClick.AddListener(OnECGButtonClick);
+        WaveButton.onClick.AddListener(OnWaveButtonClick);
+        Wave2Button.onClick.AddListener(OnWave2ButtonClick);
         QuitButton.onClick.AddListener(OnQuitButtonClick);
         ShowPageBackButton.onClick.AddListener(OnBackButtonClick);
         PauseButton.onClick.AddListener(OnPauseButtonClick);
@@ -62,6 +76,8 @@ public class ButtonListeners : MonoBehaviour
         PreviousAnimButton.onClick.AddListener(OnPreviousAnimButtonClick);
         PlayDefaultButton.onClick.AddListener(OnECGButtonClick);
         ECGBackButton.onClick.AddListener(OnBackButtonClick);
+        WaveBackButton.onClick.AddListener(OnBackButtonClick);
+        Wave2BackButton.onClick.AddListener(OnBackButtonClick);
         ShowSpeedSlider.onValueChanged.AddListener(OnSpeedSliderValueChanged);
         ECGSpeedSlider.onValueChanged.AddListener(OnECGSpeedSliderValueChanged);
     }
@@ -75,6 +91,18 @@ public class ButtonListeners : MonoBehaviour
     {
         ECGSpeedSlider.value = 0.4f;
         game.SetStage(GameStage.ECGPage);
+    }
+    
+    public void OnWaveButtonClick()
+    {
+        //ECGSpeedSlider.value = 0.4f;
+        game.SetStage(GameStage.WavePage);
+    }
+
+    public void OnWave2ButtonClick()
+    {
+        //ECGSpeedSlider.value = 0.4f;
+        game.SetStage(GameStage.WavePage2);
     }
 
     public void OnQuitButtonClick()

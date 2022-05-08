@@ -6,11 +6,17 @@ public class ECGManager
 {
     private HeartControl heart;
     private PathControl path;
+    public WaveControl wave1;
+    public WaveControl wave2;
+    public HeartPathData Monitor;
 
     public ECGManager()
     {
         heart = GameObject.Find("Heart").GetComponent<HeartControl>();
         path = GameObject.Find("ECGPath").GetComponent<PathControl>();
+        wave1 = GameObject.Find("WavePage").GetComponent<WaveControl>();
+        wave2 = GameObject.Find("WavePage2").GetComponent<WaveControl>();
+        Monitor = GameObject.Find("MonitorApartPage").GetComponent<HeartPathData>();
     }
 
     public void SetPlaySpeed(float speed)

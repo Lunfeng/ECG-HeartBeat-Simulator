@@ -50,6 +50,7 @@ public class CameraManager
     public void SwitchToShowMode(bool Switch)
     {
         cameraControl.interactable = Switch;
+        cameraControl.MonitorCamera.SetActive(!Switch);
         cameraControl.SwitchTarget(Switch ? Heart : Target2);
     }
 

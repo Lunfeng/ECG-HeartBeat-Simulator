@@ -16,7 +16,7 @@ public class PathControl : MonoBehaviour
 
     public void SetPathSpeed(float speed)
     {
-        DOTween.timeScale = speed * 10;
+        //DOTween.timeScale = speed * 10;
         this.speed = DOTween.timeScale;
     }
 

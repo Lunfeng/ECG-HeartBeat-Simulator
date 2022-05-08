@@ -55,6 +55,12 @@ public class GameManager
             case GameStage.ECGPage:
                 ECGPage();
                 break;
+            case GameStage.WavePage:
+                WavePage();
+                break;
+            case GameStage.WavePage2:
+                WavePage2();
+                break;
         }
     }
 
@@ -81,6 +87,9 @@ public class GameManager
         ecg.RestartAnim();
         ecg.RewindDefault();
         ecg.PlayDefaultPath();
+        ecg.Monitor.NextAnim();
+        camera.cameraControl.EnableWaveCamera(false);
+        camera.cameraControl.EnableMonitorCamera(true);
     }
 
     private void ShowPage()
@@ -89,6 +98,8 @@ public class GameManager
         ui.ActiveShowPage();
         camera.SwitchToShowMode(true);
         camera.EnableMonitor(false);
+        camera.cameraControl.EnableWaveCamera(false);
+        camera.cameraControl.EnableMonitorCamera(false);
     }
 
     private void ECGPage()
@@ -101,6 +112,24 @@ public class GameManager
         ecg.RewindDefault();
         ecg.PlayDefaultPath();
         ecg.SetPathSpeed(0.04f);
+        camera.cameraControl.EnableWaveCamera(false);
+        camera.cameraControl.EnableMonitorCamera(true);
+    }
+
+    private void WavePage()
+    {
+        Debug.Log("WavePage");
+        ui.ActiveWavePage();
+        camera.cameraControl.EnableWaveCamera(true);
+        camera.cameraControl.EnableMonitorCamera(false);
+    }
+
+    private void WavePage2()
+    {
+        Debug.Log("WavePage");
+        ui.ActiveWavePage2();
+        camera.cameraControl.EnableWaveCamera(true);
+        camera.cameraControl.EnableMonitorCamera(false);
     }
 }
 
@@ -108,5 +137,7 @@ public enum GameStage
 {
     StartMenu,
     ShowPage,
-    ECGPage
+    ECGPage,
+    WavePage,
+    WavePage2
 }
