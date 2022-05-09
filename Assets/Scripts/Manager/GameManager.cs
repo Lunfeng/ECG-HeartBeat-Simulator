@@ -108,6 +108,7 @@ public class GameManager
         ui.ActiveECGPage();
         camera.SwitchToShowMode(false);
         camera.EnableMonitor(true);
+        SetGameSpeed(0.05f);
         ecg.RestartAnim();
         ecg.RewindDefault();
         ecg.PlayDefaultPath();

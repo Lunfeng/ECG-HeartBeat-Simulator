@@ -29,6 +29,8 @@ public class WaveControl : MonoBehaviour
     public AnimationState anim;
 
     public List<Wave> Waves;
+    private float targetSpeed = 1;
+    private bool isPause = false;
 
     public void SetAnimSpeed(float speed)
     {
@@ -44,14 +46,15 @@ public class WaveControl : MonoBehaviour
 
     public void SetSpeed()
     {
-        float speed = 1;
         switch (page)
         {
             case 0:
-                SetAnimSpeed(anim.length / (DotPathDuration / 5));
+                targetSpeed = anim.length / (DotPathDuration / 5);
+                SetAnimSpeed(targetSpeed);
                 break;
             case 1:
-                SetAnimSpeed(anim.length / (DotPathDuration / 4));
+                targetSpeed = anim.length / (DotPathDuration / 4);
+                SetAnimSpeed(targetSpeed);
                 break;
         }
     }
@@ -149,17 +152,25 @@ public class WaveControl : MonoBehaviour
         Debug.Log(playDuration);
         while (true)
         {
-            foreach (Wave w in Waves)
+            if (!isPause)
             {
-                w.DotTween.GotoWaypoint(0, false);
+                foreach (Wave w in Waves)
+                {
+                    w.DotTween.GotoWaypoint(0, false);
+                }
+                //yield return 0;
+                foreach (Wave w in Waves)
+                {
+                    w.DotTween.Play<Tween>();
+                    //w.DotTrail.emitting = true;
+                }
+                yield return new WaitForSeconds(playDuration);
             }
-            //yield return 0;
-            foreach (Wave w in Waves)
+            else
             {
-                w.DotTween.Play<Tween>();
-                //w.DotTrail.emitting = true;
+                yield return 0;
             }
-            yield return new WaitForSeconds(playDuration);
+            
         }
     }
 
@@ -174,18 +185,25 @@ public class WaveControl : MonoBehaviour
         StartCoroutine(Restart(Waves, DotPathDuration));
     }
 
-    //public IEnumerator DrawTrail(List<Wave> Waves)
-    //{
-    //    while (true)
-    //    {
-    //        foreach(Wave w in Waves)
-    //        {
-    //            w.TrailTween.Play<Tween>();
-    //            ((w.TrailTween.target) as GameObject).GetComponent<TrailRenderer>().emitting = true;
-    //        }
-    //        yield return new WaitForSeconds(PathRenderTime);
-    //    }
-    //}
+    public void Pause()
+    {
+        foreach(Wave w in Waves)
+        {
+            w.DotTween.Pause<Tween>();
+        }
+        anim.speed = 0;
+        isPause = true;
+    }
+
+    public void Continue()
+    {
+        foreach (Wave w in Waves)
+        {
+            w.DotTween.Play<Tween>();
+        }
+        anim.speed = targetSpeed;
+        isPause = false;
+    }
 
     public void Update()
     {

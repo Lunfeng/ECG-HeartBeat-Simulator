@@ -39,7 +39,7 @@ public class CameraManager
     public void ResetCamera(bool immediately)
     {
         UndateUserInteraction(false);
-        cameraControl.LookAtFront(Heart.transform.eulerAngles, ResetFinished, immediately);
+        cameraControl.LookAtFront(cameraControl.Target.transform.eulerAngles, ResetFinished, immediately);
     }
 
     public void ResetFinished()

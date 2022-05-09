@@ -5,12 +5,12 @@ using UnityEngine;
 public class ECGIntroductionControl : MonoBehaviour
 {
     public GameObject IntroductionPage;
-    private CanvasRenderer[] Pages;
+    public List<CanvasRenderer> Pages;
 
     // Start is called before the first frame update
     void Start()
     {
-        Pages = IntroductionPage.transform.GetComponentsInChildren<CanvasRenderer>(true);
+        //Pages = IntroductionPage.transform.GetComponentsInChildren<CanvasRenderer>(true);
     }
 
     public void ApplyActiveToAll(bool isActive)

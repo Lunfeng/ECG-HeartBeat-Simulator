@@ -9,6 +9,9 @@ public class CameraControl : MonoBehaviour
     public GameObject m_Camera;
     public GameObject MonitorCamera;
     public GameObject WaveCamera;
+    public GameObject Pos1;
+    public GameObject Pos2;
+    public bool LockToPos = false;
 
     public bool interactable = true;
     public float camDistence = 5.0f;
@@ -41,18 +44,6 @@ public class CameraControl : MonoBehaviour
         Ray ray = UnityEngine.Camera.main.ScreenPointToRay(Input.mousePosition);
         Debug.DrawRay(ray.origin, ray.direction, Color.red);
         RaycastHit hit;
-        //if (interactable && Input.GetKey(KeyCode.Mouse0))   //当用户可操作并且左键按下时
-        //{
-        //    if (Physics.Raycast(ray, out hit, int.MaxValue))
-        //    {
-        //        Debug.Log(hit.transform.gameObject.name);
-        //        canDrag = true;
-        //    }
-        //    StopAllCoroutines();
-        //    x = Input.GetAxis("Mouse X");                   //对鼠标坐标采样
-        //    y = Input.GetAxis("Mouse Y");
-        //    Spin(x, y);
-        //}
         if (Physics.Raycast(ray, out hit, int.MaxValue))
         {
             if (interactable && Input.GetKeyDown(KeyCode.Mouse0) && hit.transform.name == "Heart")   //当用户可操作并且左键按下时
@@ -72,8 +63,11 @@ public class CameraControl : MonoBehaviour
             y = Input.GetAxis("Mouse Y");
             Spin(x, y);
         }
-        m_Camera.transform.LookAt(Target.transform);
-        m_Camera.transform.position = Target.transform.position - m_Camera.transform.forward * camDistence;
+        if (!LockToPos)
+        {
+            m_Camera.transform.LookAt(Target.transform);
+            m_Camera.transform.position = Target.transform.position - m_Camera.transform.forward * camDistence;
+        }
 
         if (Input.GetKeyDown(KeyCode.Mouse1) && interactable)
         {
@@ -105,7 +99,7 @@ public class CameraControl : MonoBehaviour
 
     public void LookAtFront(Vector3 targetPos, RoatationFinishCallBack callback, bool immediately)
     {
-        targetPos.y += 90;
+        //targetPos.y += 90;
         this.callback = callback;
         //StartCoroutine(RotateTo(Camera.transform.eulerAngles, targetPos));
         if (immediately)

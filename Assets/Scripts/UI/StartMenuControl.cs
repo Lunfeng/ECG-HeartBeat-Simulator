@@ -18,13 +18,15 @@ public class StartMenuControl : MonoBehaviour
     {
         StartMenu = gameObject.transform.GetChild(0).gameObject;
         StartPage = gameObject.transform.GetChild(1).gameObject;
+        EnableStartPage(true);
     }
 
     void Update()
     {
-        if(isStartPage && Input.GetKeyDown(KeyCode.Mouse0))
+        if(isStartPage)
         {
-            EnableStartPage(false);
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+                EnableStartPage(false);
         }
     }
 
