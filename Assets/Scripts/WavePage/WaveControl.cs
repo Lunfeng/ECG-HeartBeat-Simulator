@@ -1,9 +1,9 @@
+using DG.Tweening;
+using LitJson;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using LitJson;
 using System.IO;
-using DG.Tweening;
+using UnityEngine;
 
 public class WaveControl : MonoBehaviour
 {
@@ -31,6 +31,7 @@ public class WaveControl : MonoBehaviour
     public List<Wave> Waves;
     private float targetSpeed = 1;
     private bool isPause = false;
+    private float wave3Speed = 1;
 
     public void SetAnimSpeed(float speed)
     {
@@ -56,6 +57,27 @@ public class WaveControl : MonoBehaviour
                 targetSpeed = anim.length / (DotPathDuration / 4);
                 SetAnimSpeed(targetSpeed);
                 break;
+            case 2:
+                StopCoroutine("SetWave3Speed");
+                StartCoroutine("SetWave3Speed");
+                break;
+        }
+    }
+
+    public IEnumerator SetWave3Speed()
+    {
+        wave3Speed = 1;
+        float time = 0;
+        while (wave3Speed > 0.1f)
+        {
+            if(time > 3f)
+            {
+                wave3Speed -= 0.2f;
+                //wave3Speed  = 0;
+            }
+            SetAnimSpeed(wave3Speed);
+            time += Time.deltaTime;
+            yield return 0;
         }
     }
 
@@ -67,7 +89,7 @@ public class WaveControl : MonoBehaviour
         return Waves;
     }
 
-    public List<Wave> GenerateWaves(List<List<Pos>> pathDatas, List<GameObject> StartPoints, RectTransform ScaleObj, float PlayDuration, float XFix = 1, float YFix = 1)
+    public List<Wave> GenerateWaves(List<List<Pos>> pathDatas, List<GameObject> StartPoints, RectTransform ScaleObj, float DotPathDuration, float XFix = 1, float YFix = 1)
     {
         List<Wave> Waves = new List<Wave>();
         float scale = ScaleObj.anchoredPosition.x / 25;
@@ -118,7 +140,7 @@ public class WaveControl : MonoBehaviour
             tr2.material = DotMaterial;
             tr2.minVertexDistance = 0;
 
-            Tween t2 = Dot.transform.DOPath(posArr.ToArray(), PlayDuration, PathType.CatmullRom).SetLoops(-1, LoopType.Yoyo).SetEase<Tween>(Ease.Linear);
+            Tween t2 = Dot.transform.DOPath(posArr.ToArray(), DotPathDuration, PathType.CatmullRom).SetLoops(-1, LoopType.Yoyo).SetEase<Tween>(Ease.Linear);
             t2.OnStepComplete(() => {
                 Debug.Log("Done2");
                 tr2.emitting = false;
@@ -129,7 +151,15 @@ public class WaveControl : MonoBehaviour
             //});
             t2.OnPlay(() => {
                 tr2.Clear();
-                anim.time = AnimStartTime;
+                if(page == 2)
+                {
+                    StopCoroutine(SetWave3Speed());
+                    StartCoroutine(SetWave3Speed());
+                }
+                else
+                {
+                    anim.time = AnimStartTime;
+                }
                 tr2.emitting = true;
             });
             t2.Play<Tween>();
@@ -141,7 +171,7 @@ public class WaveControl : MonoBehaviour
         }
         anim.time = AnimStartTime;
         //StartCoroutine(DrawTrail(Waves));
-        StartCoroutine(Restart(Waves, PlayDuration));
+        StartCoroutine(Restart(Waves, DotPathDuration));
         return Waves;
     }
 

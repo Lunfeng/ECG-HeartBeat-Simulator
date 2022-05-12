@@ -61,6 +61,9 @@ public class GameManager
             case GameStage.WavePage2:
                 WavePage2();
                 break;
+            case GameStage.WavePage3:
+                WavePage3();
+                break;
         }
     }
 
@@ -120,7 +123,6 @@ public class GameManager
 
     private void WavePage()
     {
-        Debug.Log("WavePage");
         ui.ActiveWavePage();
         ecg.wave1.SetSpeed();
         camera.cameraControl.EnableWaveCamera(true);
@@ -129,9 +131,16 @@ public class GameManager
 
     private void WavePage2()
     {
-        Debug.Log("WavePage");
         ui.ActiveWavePage2();
         ecg.wave2.SetSpeed();
+        camera.cameraControl.EnableWaveCamera(true);
+        camera.cameraControl.EnableMonitorCamera(false);
+    }
+
+    private void WavePage3()
+    {
+        ui.ActiveWavePage3();
+        ecg.wave3.SetSpeed();
         camera.cameraControl.EnableWaveCamera(true);
         camera.cameraControl.EnableMonitorCamera(false);
     }
@@ -143,5 +152,6 @@ public enum GameStage
     ShowPage,
     ECGPage,
     WavePage,
-    WavePage2
+    WavePage2,
+    WavePage3
 }

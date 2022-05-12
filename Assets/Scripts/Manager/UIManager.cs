@@ -42,6 +42,11 @@ public class UIManager
         ui.UpdateUIPageActive(GameStage.WavePage2, true);
     }
 
+    public void ActiveWavePage3()
+    {
+        ui.UpdateUIPageActive(GameStage.WavePage3, true);
+    }
+
     public void SetSpeedText(float speed)
     {
         showPage.SetSpeedText(speed);
