@@ -110,11 +110,12 @@ public class HeartPathData : MonoBehaviour
         }
         animList = new List<AnimationTime>();
         DefaultPathAnimation = new AnimationTime(0.00f, 0.40f, GetRange(PosSets, 1, 13), PathType.Linear, target);
+        
         P = new AnimationTime(0.00f, 0.05f, GetRange(PosSets, 1, 4), PathType.Linear, target);
         PQ = new AnimationTime(0.05f, 0.10f, GetRange(PosSets, 4, 5), PathType.Linear, target);
-        QRS = new AnimationTime(0.10f, 0.24f, GetRange(PosSets, 5, 8), PathType.Linear, target);
-        ST = new AnimationTime(0.24f, 0.30f, GetRange(PosSets, 8, 9), PathType.Linear, target);
-        T = new AnimationTime(0.30f, 0.40f, GetRange(PosSets, 9, 13), PathType.Linear, target);
+        QRS = new AnimationTime(0.30f, 0.50f, GetRange(PosSets, 5, 8), PathType.Linear, target);
+        ST = new AnimationTime(0.40f, 0.60f, GetRange(PosSets, 8, 9), PathType.Linear, target);
+        T = new AnimationTime(0.90f, 1.30f, GetRange(PosSets, 9, 13), PathType.Linear, target);
         animList.Add(P);
         animList.Add(PQ);
         animList.Add(QRS);

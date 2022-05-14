@@ -141,6 +141,7 @@ public class GameManager
     {
         ui.ActiveWavePage3();
         ecg.wave3.SetSpeed();
+        ecg.wave3.RewindDots();
         camera.cameraControl.EnableWaveCamera(true);
         camera.cameraControl.EnableMonitorCamera(false);
     }

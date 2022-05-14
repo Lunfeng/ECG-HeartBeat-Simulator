@@ -42,42 +42,51 @@ public class WaveControl : MonoBehaviour
     {
         anim = heartAnim["play"];
         //SetAnimSpeed(2);
-        ShowWaves();
+        //if(page != 2)
+        {
+            ShowWaves();
+        }
     }
 
     public void SetSpeed()
     {
+        StopCoroutine(SetWave3Speed());
         switch (page)
         {
             case 0:
                 targetSpeed = anim.length / (DotPathDuration / 5);
                 SetAnimSpeed(targetSpeed);
+                //anim.time = AnimStartTime;
                 break;
             case 1:
                 targetSpeed = anim.length / (DotPathDuration / 4);
                 SetAnimSpeed(targetSpeed);
+                //anim.time = AnimStartTime;
                 break;
             case 2:
-                StopCoroutine("SetWave3Speed");
-                StartCoroutine("SetWave3Speed");
+                //StartCoroutine(SetWave3Speed());
                 break;
         }
     }
 
     public IEnumerator SetWave3Speed()
     {
-        wave3Speed = 1;
-        float time = 0;
-        while (wave3Speed > 0.1f)
+        if (true)
         {
-            if(time > 3f)
+            wave3Speed = 1;
+            float time = 0;
+            anim.time = AnimStartTime;
+            while (wave3Speed > 0.1f && LayerMask.LayerToName(gameObject.layer) == "UI")
             {
-                wave3Speed -= 0.2f;
-                //wave3Speed  = 0;
+                if (time > 3f)
+                {
+                    wave3Speed -= 0.2f;
+                    //wave3Speed  = 0;
+                }
+                SetAnimSpeed(wave3Speed);
+                time += Time.deltaTime;
+                yield return 0;
             }
-            SetAnimSpeed(wave3Speed);
-            time += Time.deltaTime;
-            yield return 0;
         }
     }
 
@@ -151,17 +160,22 @@ public class WaveControl : MonoBehaviour
             //});
             t2.OnPlay(() => {
                 tr2.Clear();
-                if(page == 2)
+                if (LayerMask.LayerToName(gameObject.layer) == "UI")
                 {
-                    StopCoroutine(SetWave3Speed());
-                    StartCoroutine(SetWave3Speed());
+                    if (page == 2)
+                    {
+                        StopCoroutine(SetWave3Speed());
+                        StartCoroutine(SetWave3Speed());
+                    }
+                    else
+                    {
+                        anim.time = AnimStartTime;
+                    }
                 }
-                else
-                {
-                    anim.time = AnimStartTime;
-                }
+                
                 tr2.emitting = true;
             });
+
             t2.Play<Tween>();
 
             w.DotTrail = tr2;
@@ -171,18 +185,45 @@ public class WaveControl : MonoBehaviour
         }
         anim.time = AnimStartTime;
         //StartCoroutine(DrawTrail(Waves));
-        StartCoroutine(Restart(Waves, DotPathDuration));
+        if(page != 2)
+            StartCoroutine(Restart(Waves, DotPathDuration));
         return Waves;
+    }
+
+    public void RewindDots()
+    {
+        //StopCoroutine(Rewind());
+        //StopCoroutine(SetWave3Speed());
+        StopAllCoroutines();
+        //ShowWaves();
+        StartCoroutine(Rewind());
+        StartCoroutine(Restart(Waves, DotPathDuration));
+        //StartCoroutine(DrawTrail(Waves));
+        //StartCoroutine(Restart(Waves, DotPathDuration));
+    }
+
+    public IEnumerator Rewind()
+    {
+        foreach (Wave w in Waves)
+        {
+            w.DotTrail.emitting = false;
+            w.DotTween.Pause<Tween>();
+        }
+        yield return 0;
+        foreach (Wave w in Waves)
+        {
+            w.DotTween.GotoWaypoint(0, false);
+            w.DotTween.Play<Tween>();
+        }
+
     }
 
     public IEnumerator Restart(List<Wave> Waves, float playDuration)
     {
-        Debug.Log(playDuration);
         yield return new WaitForSeconds(playDuration);
-        Debug.Log(playDuration);
         while (true)
         {
-            if (!isPause)
+            if (!isPause)// && !Waves[0].DotTween.IsPlaying())
             {
                 foreach (Wave w in Waves)
                 {
@@ -200,7 +241,7 @@ public class WaveControl : MonoBehaviour
             {
                 yield return 0;
             }
-            
+
         }
     }
 
@@ -244,7 +285,7 @@ public class WaveControl : MonoBehaviour
     public static List<List<Pos>> ReadWaveData(string filename)
     {
         List<List<Pos>> pathDatas = JsonMapper.ToObject<List<List<Pos>>>(File.ReadAllText(Application.streamingAssetsPath + filename));
-        Debug.Log(pathDatas.Count);
+        
         return pathDatas;
     }
 }
