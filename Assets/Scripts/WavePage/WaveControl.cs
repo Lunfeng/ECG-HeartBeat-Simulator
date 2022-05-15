@@ -40,12 +40,16 @@ public class WaveControl : MonoBehaviour
 
     public void Start()
     {
+        //anim = heartAnim["play"];
+        //ShowWaves();
+        StartCoroutine(DelayPlay());
+    }
+
+    IEnumerator DelayPlay()
+    {
+        yield return new WaitForSeconds(0.5f);
         anim = heartAnim["play"];
-        //SetAnimSpeed(2);
-        //if(page != 2)
-        {
-            ShowWaves();
-        }
+        ShowWaves();
     }
 
     public void SetSpeed()
@@ -66,6 +70,11 @@ public class WaveControl : MonoBehaviour
             case 2:
                 //StartCoroutine(SetWave3Speed());
                 break;
+            case 3:
+                targetSpeed = anim.length / (DotPathDuration / 3);
+                SetAnimSpeed(targetSpeed);
+                //anim.time = AnimStartTime;
+                break;
         }
     }
 
@@ -78,7 +87,7 @@ public class WaveControl : MonoBehaviour
             anim.time = AnimStartTime;
             while (wave3Speed > 0.1f && LayerMask.LayerToName(gameObject.layer) == "UI")
             {
-                if (time > 3f)
+                if (time > 3.8f)
                 {
                     wave3Speed -= 0.2f;
                     //wave3Speed  = 0;
@@ -151,7 +160,7 @@ public class WaveControl : MonoBehaviour
 
             Tween t2 = Dot.transform.DOPath(posArr.ToArray(), DotPathDuration, PathType.CatmullRom).SetLoops(-1, LoopType.Yoyo).SetEase<Tween>(Ease.Linear);
             t2.OnStepComplete(() => {
-                Debug.Log("Done2");
+                //Debug.Log("Done2");
                 tr2.emitting = false;
                 t2.Pause<Tween>();
             });

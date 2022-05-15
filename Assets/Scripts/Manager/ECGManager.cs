@@ -9,6 +9,7 @@ public class ECGManager
     public WaveControl wave1;
     public WaveControl wave2;
     public WaveControl wave3;
+    public WaveControl wave4;
     public HeartPathData Monitor;
 
     public ECGManager()
@@ -18,6 +19,7 @@ public class ECGManager
         wave1 = GameObject.Find("WavePage").GetComponent<WaveControl>();
         wave2 = GameObject.Find("WavePage2").GetComponent<WaveControl>();
         wave3 = GameObject.Find("WavePage3").GetComponent<WaveControl>();
+        wave4 = GameObject.Find("WavePage4").GetComponent<WaveControl>();
         Monitor = GameObject.Find("MonitorApartPage").GetComponent<HeartPathData>();
     }
 

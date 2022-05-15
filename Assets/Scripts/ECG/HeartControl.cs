@@ -19,7 +19,7 @@ public class HeartControl : MonoBehaviour
         Heart = gameObject;
         anim = Heart.GetComponent<Animation>();
         state = anim["play"];
-        Debug.Log(state.length);
+        //Debug.Log(state.length);
     }
 
     public void SetPlaySpeed(float speed)

@@ -69,6 +69,13 @@ public class UIPageControl : MonoBehaviour
                 }
                 //GameManager.GetInstance().ecg.wave2.gameObject.layer = isActive ? LayerMask.NameToLayer("UI") : LayerMask.NameToLayer("Monitor");
                 break;
+            case GameStage.WavePage4:
+                foreach (Transform tran in GameManager.GetInstance().ecg.wave4.GetComponentsInChildren<Transform>())
+                {
+                    tran.gameObject.layer = isActive ? LayerMask.NameToLayer("UI") : LayerMask.NameToLayer("Monitor");
+                }
+                //GameManager.GetInstance().ecg.wave2.gameObject.layer = isActive ? LayerMask.NameToLayer("UI") : LayerMask.NameToLayer("Monitor");
+                break;
         }
     }
 }

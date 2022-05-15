@@ -7,7 +7,7 @@ public class GameManager
     public CameraManager camera;
     public UIManager ui;
     public ECGManager ecg;
-    public HeartPathData pathData;
+    //public HeartPathData pathData;
 
     public GameManager()
     {
@@ -15,7 +15,7 @@ public class GameManager
         camera = new CameraManager();
         ui = new UIManager();
         ecg = new ECGManager();
-        pathData = new HeartPathData();
+        //pathData = new HeartPathData();
     }
 
     public static GameManager GetInstance()
@@ -64,6 +64,9 @@ public class GameManager
             case GameStage.WavePage3:
                 WavePage3();
                 break;
+            case GameStage.WavePage4:
+                WavePage4();
+                break;
         }
     }
 
@@ -111,7 +114,7 @@ public class GameManager
         ui.ActiveECGPage();
         camera.SwitchToShowMode(false);
         camera.EnableMonitor(true);
-        SetGameSpeed(0.05f);
+        SetGameSpeed(0.1f);
         ecg.RestartAnim();
         ecg.RewindDefault();
         ecg.PlayDefaultPath();
@@ -145,6 +148,14 @@ public class GameManager
         camera.cameraControl.EnableWaveCamera(true);
         camera.cameraControl.EnableMonitorCamera(false);
     }
+
+    private void WavePage4()
+    {
+        ui.ActiveWavePage4();
+        ecg.wave4.SetSpeed();
+        camera.cameraControl.EnableWaveCamera(true);
+        camera.cameraControl.EnableMonitorCamera(false);
+    }
 }
 
 public enum GameStage
@@ -154,5 +165,6 @@ public enum GameStage
     ECGPage,
     WavePage,
     WavePage2,
-    WavePage3
+    WavePage3,
+    WavePage4
 }

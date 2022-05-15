@@ -124,10 +124,6 @@ public class HeartPathData : MonoBehaviour
         ShowWaves();
     }
 
-    public HeartPathData()
-    {
-        
-    }
 
     public void ShowWaves()
     {
